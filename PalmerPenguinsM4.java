@@ -1,55 +1,67 @@
 // PalmerPenguinsM4.java
-// 
-// 
-// Reads the CSV file and parses the data
+// Darien Bathalter
+// 2026-09-27
+// Reads the penguin CSV and counts how many of each species it lists
 
 import java.io.*;
 
 public class PalmerPenguinsM4 {
 
-    static final String FILE_NAME =  "PalmerPenguins.csv";
-    
+    static final String FILE_NAME = "PalmerPenguins.csv";
+
     // constants to represent the species and count
     static final String SP_CHINSTRAP = "Chinstrap";
     static final String SP_GENTOO = "Gentoo";
     static final String SP_ADELIE = "Adelie";
-    
+
     public static void main(String[] args) {
         // TODO 1 Declare the variables
-    
+        int currRow = 0;              // row of the file being read
+        int specChinStrapCount = 0;   // accumulator for Chinstrap
+        int specGentooCount = 0;      // accumulator for Gentoo
+        int specAdelieCount = 0;      // accumulator for Adelie
+
         // Read the headers
         String line = CSVReader.readFile(FILE_NAME, currRow++);
         if (line == null) {
-            System.out.println("Error: The file is empty or could not be read.");
+            System.out.println(
+                    "Error: The file is empty or could not be read.");
             return; // Exit the program if no headers are found
         }
         System.out.println("found headers:\n" + line);
-    
+
         // Process each subsequent row
         while ((line = CSVReader.readFile(FILE_NAME, currRow++)) != null) {
             // Check species in the line, increment appropriate accumulator
             if (line.contains(SP_CHINSTRAP)) {
                 specChinStrapCount++;
-            // TODO 2 complete the branches to increment the accumulators    
-            } else if            
+            // TODO 2 complete the branches to increment the accumulators
+            } else if (line.contains(SP_GENTOO)) {
+                specGentooCount++;
+            } else if (line.contains(SP_ADELIE)) {
+                specAdelieCount++;
+            }
         }
-    
+
         // Print the results
         // TODO 3 print all accumulators
-
+        System.out.println(SP_CHINSTRAP + " count = " + specChinStrapCount);
+        System.out.println(SP_GENTOO + " count = " + specGentooCount);
+        System.out.println(SP_ADELIE + " count = " + specAdelieCount);
     }
 }
 
 class CSVReader {
-    
+
     /**
      * Reads a specific row from a text file.
-     * 
+     *
      * @param FILE_NAME the name of the file to be read
      * @param row       the 0-based index of the row to retrieve
-     * @return the content of the specified row as a String, or null if the row does not exist
+     * @return the content of the specified row as a String, or null if
+     *         the row does not exist
      */
-     
+
     public static String readFile(String FILE_NAME, int row) {
         BufferedReader reader = null;
         try {
